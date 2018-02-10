@@ -8,7 +8,7 @@ class HelloMessage extends React.Component {
         return (
         <DefaultLayout>
 
-                <NavBar selectedIndex="" data={this.props.navigation}></NavBar>
+<div id="root"></div>
 
         </DefaultLayout>);
     }

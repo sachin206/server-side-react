@@ -21,3 +21,6 @@ li a.selected{
     background-color: darkcyan;
     color: white;
 }
+div[class^="col-sm-"]{
+border:1px solid;
+}

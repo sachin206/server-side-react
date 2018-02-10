@@ -7,12 +7,17 @@ class DefaultLayout extends React.Component {
             <head>
                 <title>{this.props.title}</title>
                 <link href="style.css" rel="stylesheet" />
+                
+                <link href="bootstrap.min.css" rel="stylesheet" />
             </head>
 
             <body>
-                <h1>Server Side App</h1>
-                {this.props.children}
-                <div id="root"></div>
+                <div className="container">
+                    <h1>Product Listing Page</h1>
+                    {this.props.children}
+                </div>
+               
+               
             </body>
             <script src="bundle.js" />
             </html>
