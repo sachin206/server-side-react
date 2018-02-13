@@ -13,13 +13,14 @@ class DefaultLayout extends React.Component {
 
             <body>
                 <div className="container">
-                    <h1>Product Listing Page</h1>
+                
+                <h1>Product Listing Page</h1>
                     {this.props.children}
                 </div>
                
-               
+                <script src="bundle.js"></script>
             </body>
-            <script src="bundle.js" />
+           
             </html>
         );
     }

@@ -8,7 +8,7 @@ class HelloMessage extends React.Component {
         return (
         <DefaultLayout>
 
-<div id="root"></div>
+            <div id="root"></div>
 
         </DefaultLayout>);
     }

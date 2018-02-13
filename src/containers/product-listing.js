@@ -4,32 +4,78 @@ import Search from '../component/search';
 import Sorting from '../component/sorting';
 import Filter from '../component/filter';
 
-export default class ProductListing extends React.Component{
-    constructor(props){
+export default class ProductListing extends React.Component {
+    constructor(props) {
         super(props);
         this.state = {
+            products: [],
+            searchString:''
 
         }
+        //this.searchHandler = this.searchHandler.bind(this);
+        //this.craeteCardList = this.craeteCardList.bind(this);
+        // this.craeteCardList= this.craeteCardList.bind(this);
     }
-    componentWillMount(){
+    componentDidMount() {
         fetch("products.json")
             .then((res) => {
-                console.log(res);
+                return res.json();
+            })
+            .then((data) => {
+                console.log(data);
+                this.setState({
+                    products: data.products
+                })
             })
     }
-	render(){
-		return(
+   /*  searchHandler (searchKey){
+        this.setState({
+            searchString:searchKey
+        })
+    } */
+    searchHandler = (searchKey) => {
+        this.setState({
+            searchString:searchKey
+        });
+    }
+    createCardList = () => {
+        let searchString = this.state.searchString;
+        let filteredCards = this.state.products;
+        console.log(searchString);
+
+        if(searchString !== ""){
+            filteredCards = this.state.products.filter((item) => {
+                return item.name == searchString;
+            });
+        }
+
+        let cards = filteredCards.map((item, index) => {
+                return (
+                    <ProductCard key={index} data = {item} ></ProductCard>
+                )
+        });
+        return cards;
+
+    }
+    render() {
+
+       /*  const craeteCardList =
+            this.state.products.map((item, index) => {
+                return <ProductCard key={index} data={item} ></ProductCard>
+            }); */
+            
+        return (
             <React.Fragment>
-                    <div className="row">  
-                        <div className="col-sm-10"><Search /></div>
-                        <div className="col-sm-2"><Sorting /></div>
-                    </div>
-                    
-                    <div className="row">
-                        <div className="col-sm-2"><Filter /></div>
-                        <div className="col-sm-10"><ProductCard /></div>
-                    </div>
-                </React.Fragment>
-			)
-	}
+                <div className="row">
+                    <div className="col-sm-10"><Search searchHandler = {this.searchHandler} /></div>
+                    <div className="col-sm-2"><Sorting /></div>
+                </div>
+
+                <div className="row">
+                    <div className="col-sm-2"><Filter /></div>
+                    <div className="col-sm-10">{this.createCardList()}</div>
+                </div>
+            </React.Fragment>
+        )
+    }
 }
