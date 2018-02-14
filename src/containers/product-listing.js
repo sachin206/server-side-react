@@ -9,7 +9,8 @@ export default class ProductListing extends React.Component {
         super(props);
         this.state = {
             products: [],
-            searchString:''
+            searchString:'',
+            filterString:''
 
         }
         //this.searchHandler = this.searchHandler.bind(this);
@@ -38,14 +39,25 @@ export default class ProductListing extends React.Component {
             searchString:searchKey
         });
     }
+    filterHandler= (filterKey) => {
+        this.setState({
+            filterString:filterKey
+        })
+    }
     createCardList = () => {
         let searchString = this.state.searchString;
+        let filterString = this.state.filterString;
         let filteredCards = this.state.products;
         console.log(searchString);
 
         if(searchString !== ""){
             filteredCards = this.state.products.filter((item) => {
                 return item.name == searchString;
+            });
+        }
+        if(filterString!==undefined && filterString !== ""){
+            filteredCards = this.state.products.filter((item) => {
+                return item.category == filterString;
             });
         }
 
@@ -72,7 +84,7 @@ export default class ProductListing extends React.Component {
                 </div>
 
                 <div className="row">
-                    <div className="col-sm-2"><Filter /></div>
+                    <div className="col-sm-2"><Filter filterHandler = {this.filterHandler} /></div>
                     <div className="col-sm-10">{this.createCardList()}</div>
                 </div>
             </React.Fragment>

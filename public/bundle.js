@@ -18369,14 +18369,26 @@ var ProductListing = function (_React$Component) {
             });
         };
 
+        _this.filterHandler = function (filterKey) {
+            _this.setState({
+                filterString: filterKey
+            });
+        };
+
         _this.createCardList = function () {
             var searchString = _this.state.searchString;
+            var filterString = _this.state.filterString;
             var filteredCards = _this.state.products;
             console.log(searchString);
 
             if (searchString !== "") {
                 filteredCards = _this.state.products.filter(function (item) {
                     return item.name == searchString;
+                });
+            }
+            if (filterString !== undefined && filterString !== "") {
+                filteredCards = _this.state.products.filter(function (item) {
+                    return item.category == filterString;
                 });
             }
 
@@ -18388,7 +18400,8 @@ var ProductListing = function (_React$Component) {
 
         _this.state = {
             products: [],
-            searchString: ''
+            searchString: '',
+            filterString: ''
             //this.searchHandler = this.searchHandler.bind(this);
             //this.craeteCardList = this.craeteCardList.bind(this);
             // this.craeteCardList= this.craeteCardList.bind(this);
@@ -18447,7 +18460,7 @@ var ProductListing = function (_React$Component) {
                     _react2.default.createElement(
                         'div',
                         { className: 'col-sm-2' },
-                        _react2.default.createElement(_filter2.default, null)
+                        _react2.default.createElement(_filter2.default, { filterHandler: this.filterHandler })
                     ),
                     _react2.default.createElement(
                         'div',
@@ -18684,7 +18697,7 @@ exports.default = Sorting;
 
 
 Object.defineProperty(exports, "__esModule", {
-	value: true
+    value: true
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
@@ -18702,37 +18715,82 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var Filter = function (_React$Component) {
-	_inherits(Filter, _React$Component);
+    _inherits(Filter, _React$Component);
 
-	function Filter() {
-		_classCallCheck(this, Filter);
+    function Filter(props) {
+        _classCallCheck(this, Filter);
 
-		return _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).apply(this, arguments));
-	}
+        var _this = _possibleConstructorReturn(this, (Filter.__proto__ || Object.getPrototypeOf(Filter)).call(this, props));
 
-	_createClass(Filter, [{
-		key: "render",
-		value: function render() {
-			return _react2.default.createElement(
-				"div",
-				null,
-				_react2.default.createElement("input", { type: "radio", name: "catfilter", value: "shirts" }),
-				" Shirts ",
-				_react2.default.createElement("br", null),
-				_react2.default.createElement("input", { type: "radio", name: "catfilter", value: "tshirts" }),
-				" T Shirts ",
-				_react2.default.createElement("br", null),
-				_react2.default.createElement("input", { type: "radio", name: "catfilter", value: "jeans" }),
-				" Jeans ",
-				_react2.default.createElement("br", null),
-				_react2.default.createElement("input", { type: "radio", name: "catfilter", value: "kurta" }),
-				" Kurta ",
-				_react2.default.createElement("br", null)
-			);
-		}
-	}]);
+        _this.state = {
+            filterString: ""
+        };
+        return _this;
+    }
 
-	return Filter;
+    _createClass(Filter, [{
+        key: "onFilterClick",
+        value: function onFilterClick(evt) {
+            this.setState({
+                filterString: evt.target.value
+            });
+        }
+    }, {
+        key: "onFilter",
+        value: function onFilter(evt) {
+
+            this.props.filterHandler(evt.target.value);
+        }
+    }, {
+        key: "render",
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                "div",
+                null,
+                "Filter ",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("input", { type: "radio", checked: this.state.filterString === "", onClick: function onClick(evt) {
+                        return _this2.onFilterClick(evt);
+                    }, onChange: function onChange(evt) {
+                        return _this2.onFilter(evt);
+                    }, value: "" }),
+                "All",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("input", { type: "radio", checked: this.state.filterString === "shirts", onClick: function onClick(evt) {
+                        return _this2.onFilterClick(evt);
+                    }, onChange: function onChange(evt) {
+                        return _this2.onFilter(evt);
+                    }, value: "shirts" }),
+                "Shirt",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("input", { type: "radio", checked: this.state.filterString === "jeans", onClick: function onClick(evt) {
+                        return _this2.onFilterClick(evt);
+                    }, onChange: function onChange(evt) {
+                        return _this2.onFilter(evt);
+                    }, value: "jeans" }),
+                "Jeans",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("input", { type: "radio", checked: this.state.filterString === "tshirts", onClick: function onClick(evt) {
+                        return _this2.onFilterClick(evt);
+                    }, onChange: function onChange(evt) {
+                        return _this2.onFilter(evt);
+                    }, value: "tshirts" }),
+                "T-Shirt",
+                _react2.default.createElement("br", null),
+                _react2.default.createElement("input", { type: "radio", checked: this.state.filterString === "kurta", onClick: function onClick(evt) {
+                        return _this2.onFilterClick(evt);
+                    }, onChange: function onChange(evt) {
+                        return _this2.onFilter(evt);
+                    }, value: "kurta" }),
+                "Kurta",
+                _react2.default.createElement("br", null)
+            );
+        }
+    }]);
+
+    return Filter;
 }(_react2.default.Component);
 
 exports.default = Filter;
