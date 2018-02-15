@@ -27,8 +27,6 @@ export default class Search extends React.Component{
     }
     onSearch(evt){
         this.props.searchHandler(this.state.searchString);
-
-
     }
     
 	render(){
